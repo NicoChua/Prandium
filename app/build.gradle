@@ -3,6 +3,7 @@ plugins {
 }
 
 android {
+    //noinspection GradleCompatible
     compileSdk 32
 
     defaultConfig {

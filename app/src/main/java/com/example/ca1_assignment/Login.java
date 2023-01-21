@@ -2,10 +2,15 @@ package com.example.ca1_assignment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Objects;
@@ -16,6 +21,11 @@ public class Login extends AppCompatActivity {
 
     PasswordDB db ;
     TextView txtListContact ;
+    //Storing ID in SharedPreferences
+    Integer id;
+    public static final String MyPREFERENCES = "MyPrefs";
+    public static final String UId = "uId";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +43,18 @@ public class Login extends AppCompatActivity {
 
         for (LoginInfo cn : LoginInfo) {
             if (cn.getName().equals(username) && cn.getPassword().equals(password)) {
+                id = cn.getID();
                 userFound = true;
             }
         }
         if (userFound == true) {
+            SharedPreferences sp = getSharedPreferences(MyPREFERENCES, Activity.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putInt(UId, id);
+            editor.commit();
+            //show id, not necessary
+            Toast.makeText(this, String.valueOf(id), Toast.LENGTH_SHORT).show();
+
             new SweetAlertDialog(Login.this, SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText("Message")
                     .setContentText("Log in successful!")
