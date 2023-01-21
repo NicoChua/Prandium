@@ -15,14 +15,14 @@ public class Profile extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.profile);
         getSupportActionBar().hide();
         editProfile = (ImageButton) findViewById(R.id.editProfile);
 
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, editLocation.class);
+                Intent i = new Intent(Profile.this, editLocation.class);
                 startActivity(i);
             }
         });

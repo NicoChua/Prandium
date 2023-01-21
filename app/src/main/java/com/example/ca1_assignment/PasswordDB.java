@@ -79,7 +79,7 @@ public class PasswordDB extends SQLiteOpenHelper {
         return LoginInfo;
     }
     // code to get all contacts in a list view
-    public List<LoginInfo> getAllContacts() {
+    public List<LoginInfo> getAllUsers() {
         List<LoginInfo> contactList = new ArrayList<LoginInfo>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_CONTACTS;
@@ -105,17 +105,17 @@ public class PasswordDB extends SQLiteOpenHelper {
     }
 
     // code to update the single contact
-    public int updateContact(LoginInfo contact) {
+    public int updateContact(LoginInfo user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, contact.getName());
-        values.put(KEY_PASSWORD, contact.getPassword());
-        values.put(KEY_LOCATION, contact.getLocation());
+        values.put(KEY_ID, user.getID());
+        values.put(KEY_NAME, user.getName());
+        values.put(KEY_LOCATION, user.getLocation());
 
         // updating row
         return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(contact.getID()) });
+                new String[] { String.valueOf(user.getID()) });
     }
 
     // Deleting single contact

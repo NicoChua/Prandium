@@ -15,8 +15,10 @@ import java.util.List;
 
 public class editLocation extends AppCompatActivity implements View.OnClickListener {
     EditText tName, tLoc ;
-    DatabaseHandler db ;
+    int userID;
+    PasswordDB db ;
     private Button backButton;
+    LoginInfo userDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +26,8 @@ public class editLocation extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().hide();
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.edit_profile);
-
-        db  = new DatabaseHandler(this);
+        db  = new PasswordDB(this);
+        userDetails = db.getLoginInfo(int id)
         tName = (EditText) findViewById((R.id.updateName));
         tLoc = (EditText) findViewById((R.id.updateLocation));
 
@@ -48,13 +50,14 @@ public class editLocation extends AppCompatActivity implements View.OnClickListe
                 String userLoc = tLoc.getText().toString();
                 //REMEMBER CHANGE TO EDIT
 //                db.addUser(new User(userName, userLoc));
-                db.addUser(new User(userName, userLoc));
+                userDetails = new LoginInfo(userID, userName, userLoc)
+                db.updateContact(userDetails);
 
                 // Reading all contacts
                 Log.d("Reading: ", "Reading all contacts..");
-                List<User> users = db.getAllUsers();
+                List<LoginInfo> users = db.getAllUsers();
 
-                for (User cn : users) {
+                for (LoginInfo cn : users) {
                     String log = "Id: " + cn.getID() + " ,Name: " + cn.getName() + " ,Location: " +
                             cn.getLocation();
                     // Writing Contacts to log
