@@ -24,7 +24,7 @@ public class Login extends AppCompatActivity {
 
         Intent intent = getIntent();
         db  = new PasswordDB(this);
-        List<LoginInfo> LoginInfo = db.getAllContacts();
+        List<LoginInfo> LoginInfo = db.getAllUsers();
 
         String username = intent.getStringExtra("name");
         String password = intent.getStringExtra("password");

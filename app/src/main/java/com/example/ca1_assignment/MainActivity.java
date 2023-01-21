@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent l = new Intent(this, Register.class);
                 startActivity(l);
                 break;
-
         }
     }
 
