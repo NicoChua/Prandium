@@ -4,6 +4,7 @@ public class LoginInfo {
     int _id;
     String _name;
     String _password;
+    String _location;
 
     // Constructor
     public LoginInfo(){
@@ -11,16 +12,18 @@ public class LoginInfo {
     }
 
     // Constructor
-    public LoginInfo(int id, String name, String _password){
+    public LoginInfo(int id, String name, String _password, String _location){
         this._id = id;
         this._name = name;
         this._password = _password;
+        this._location = _location;
     }
 
     // Constructor
-    public LoginInfo(String name, String _password){
+    public LoginInfo(String name, String _password, String _location){
         this._name = name;
         this._password = _password;
+        this._location = _location;
     }
 
     public int getID(){
@@ -45,6 +48,14 @@ public class LoginInfo {
 
     public void setPassword(String password){
         this._password = password;
+    }
+
+    public String getLocation(){
+        return this._location;
+    }
+
+    public void setLocation(String location){
+        this._location = location;
     }
 
 }
