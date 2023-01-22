@@ -6,18 +6,32 @@
     android:layout_height="match_parent"
     android:background="#DFE4DD">
 
-    <EditText
+    <Spinner
         android:id="@+id/updateLocation"
         android:layout_width="289dp"
         android:layout_height="48dp"
+        android:layout_marginTop="1dp"
         android:layout_marginBottom="228dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Location"
+        android:contentDescription="Location"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.393"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/updateButton"
+        android:layout_width="75dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#4974A5"
+        android:onClick="onClick"
+        android:text="Save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.142"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updateLocation" />
 
     <TextView
         android:id="@+id/textView11"
@@ -34,7 +48,7 @@
         app:layout_constraintHorizontal_bias="0.227"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.604" />
+        app:layout_constraintVertical_bias="0.64" />
 
     <TextView
         android:id="@+id/header3"
@@ -130,28 +144,28 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/updateButton"
-        android:layout_width="75dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="#4974A5"
-        android:text="Save"
-        android:onClick="onClick"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.142"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/updateLocation" />
-
-    <Button
         android:id="@+id/updateBackButton"
         android:layout_width="75dp"
         android:layout_height="48dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="#4974A5"
+        android:onClick="onClick"
         android:text="back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.065"
         app:layout_constraintStart_toEndOf="@+id/updateButton"
         app:layout_constraintTop_toBottomOf="@+id/updateLocation" />
+
+    <TextView
+        android:id="@+id/currentLoc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current Location:"
+        app:layout_constraintBottom_toTopOf="@+id/textView11"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.157"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updateName"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

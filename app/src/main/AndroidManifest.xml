@@ -11,7 +11,7 @@
         android:theme="@style/Theme.CA1_Assignment">
         <activity
             android:name=".Home"
-            android:exported="false">
+            android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -32,6 +32,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+        <activity android:name=".Profile"
+            android:exported="true"/>
+        <activity android:name=".editLocation"
+            android:exported="true"/>
     </application>
 
 </manifest>

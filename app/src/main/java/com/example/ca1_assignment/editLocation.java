@@ -6,20 +6,29 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class editLocation extends AppCompatActivity implements View.OnClickListener {
-    EditText tName, tLoc;
+    EditText tName;
+    TextView tLoc;
     PasswordDB db ;
     private Button backButton;
     LoginInfo userDetails;
-
+    Spinner spinner;
+    List<String> options;
+    String location;
     SharedPreferences prefs;
     Integer id;
     public static final String MyPREFERENCES = "MyPrefs";
@@ -36,10 +45,31 @@ public class editLocation extends AppCompatActivity implements View.OnClickListe
         prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         id = prefs.getInt(UId,0);
         userDetails = db.getLoginInfo(id);
+        Log.d("Log:",userDetails.getLocation());
 
         tName = (EditText) findViewById((R.id.updateName));
-        tLoc = (EditText) findViewById((R.id.updateLocation));
+        tName.setText(userDetails.getName());
+        tLoc = (TextView) findViewById((R.id.currentLoc));
+        tLoc.setText("Current location: " + userDetails.getLocation().toString());
+        spinner = findViewById(R.id.updateLocation);
+        options = new ArrayList<>();
+        options.add("North");
+        options.add("South");
+        options.add("East");
+        options.add("West");
+        spinner.setAdapter(new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, options));
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                location = spinner.getSelectedItem().toString();
+//                Toast.makeText(Register.this, spinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 //        backButton = (Button) findViewById(R.id.updateBackButton);
 //
 //        backButton.setOnClickListener(new View.OnClickListener() {
@@ -56,18 +86,12 @@ public class editLocation extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.updateButton:
                 String userName = tName.getText().toString();
-                String userLoc = tLoc.getText().toString();
-                //REMEMBER CHANGE TO EDIT
-//                db.addUser(new User(userName, userLoc));
+//                String userLoc = tLoc.getText().toString();
 
-                //From nico : u shouldnt make a new user, but get the user using getLoginInfo()
-                //              so dont do the 2 lines below
-                String userPassword = "test";
-                userDetails = new LoginInfo(userName, userPassword, userLoc);
-                //instead, use sharedpreferences code to get id, code below
-//                prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
-//                id = prefs.getInt(UId,0);
-                db.updateContact(userDetails);
+
+                prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+                id = prefs.getInt(UId,0);
+                db.updateContact(userDetails, userName, location);
 
                 // Reading all contacts
                 Log.d("Reading: ", "Reading all contacts..");
@@ -81,7 +105,7 @@ public class editLocation extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.updateBackButton:
-                Intent i = new Intent(editLocation.this, MainActivity.class);
+                Intent i = new Intent(editLocation.this, Profile.class);
                 startActivity(i);
                 break;
         }
