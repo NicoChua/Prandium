@@ -105,13 +105,13 @@ public class PasswordDB extends SQLiteOpenHelper {
     }
 
     // code to update the single contact
-    public int updateContact(LoginInfo user) {
+    public int updateContact(LoginInfo user, String userName, String userLoc) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_ID, user.getID());
-        values.put(KEY_NAME, user.getName());
-        values.put(KEY_LOCATION, user.getLocation());
+        values.put(KEY_NAME, userName);
+        values.put(KEY_LOCATION, userLoc);
 
         // updating row
         return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
@@ -119,10 +119,10 @@ public class PasswordDB extends SQLiteOpenHelper {
     }
 
     // Deleting single contact
-    public void deleteContact(LoginInfo contact) {
+    public void deleteContact(Integer id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_CONTACTS, KEY_ID + " = ?",
-                new String[] { String.valueOf(contact.getID()) });
+                new String[] { String.valueOf(id) });
         db.close();
     }
 

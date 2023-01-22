@@ -41,6 +41,11 @@ public class Login extends AppCompatActivity {
         Boolean userFound = false;
 
 
+        //Note from de xun: Once i logout, there will be a 'no user found' alert
+        //as it actvates it onCreate. Maybe you can change to onClick instead of onCreate?
+        //If you're unclear, you can try logging in and logout to see. Because currently
+        //everytime you click login, you create a new page together with the alert. Instead of this,
+        //just do onClick so it doesnt direct the user to a new page with the prompt itself.
         for (LoginInfo cn : LoginInfo) {
             if (cn.getName().equals(username) && cn.getPassword().equals(password)) {
                 id = cn.getID();
