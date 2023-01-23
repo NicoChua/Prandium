@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "394274732081",
+    "firebase_url": "https://sp-ande-default-rtdb.firebaseio.com",
+    "project_id": "sp-ande",
+    "storage_bucket": "sp-ande.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:394274732081:android:054c37dc4189c64dff7d10",
+        "android_client_info": {
+          "package_name": "com.example.ca1_assignment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "394274732081-h1jlhs9bmbs3sdmunsh2h6vmd37mi8ja.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVTqTh4p1Q2GGtRkbGctL_UucC3YtGnJA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "394274732081-h1jlhs9bmbs3sdmunsh2h6vmd37mi8ja.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
