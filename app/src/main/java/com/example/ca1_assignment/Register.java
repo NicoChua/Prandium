@@ -1,5 +1,6 @@
 package com.example.ca1_assignment;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
+
 import android.graphics.Color;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -18,10 +20,16 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Register extends AppCompatActivity implements View.OnClickListener{
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-    EditText tName, tPhone ;
-    PasswordDB db ;
+public class Register extends AppCompatActivity implements View.OnClickListener {
+    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+    EditText tName, tPhone;
+    PasswordDB db;
     Spinner spinner;
     List<String> options;
     String location;
@@ -32,7 +40,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        db  = new PasswordDB(this);
+        db = new PasswordDB(this);
         tName = (EditText) findViewById((R.id.edtext_name));
         tPhone = (EditText) findViewById((R.id.edtext_password));
         spinner = findViewById(R.id.location);
@@ -66,6 +74,30 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
                 String password = tPhone.getText().toString();
 
                 if (!contactName.isEmpty() && !password.isEmpty()) {
+                    LoginInfo newUser = new LoginInfo(contactName, password, location);
+
+                    // we are use add value event listener method
+                    // which is called with database reference.
+                    mDatabase.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            // inside the method of on Data change we are setting
+                            // our object class to our database reference.
+                            // data base reference will sends data to firebase.
+                            mDatabase.setValue(newUser);
+
+                            // after adding this data we are showing toast message.
+                            Toast.makeText(Register.this, "data added", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            // if the data is not added or it is cancelled then
+                            // we are displaying a failure toast message.
+                            Toast.makeText(Register.this, "Fail to add data " + error, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
                     db.addContact(new LoginInfo(contactName, password, location));
                     new SweetAlertDialog(Register.this, SweetAlertDialog.SUCCESS_TYPE)
                             .setTitleText("Message")
@@ -74,11 +106,12 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
                             .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                                 @Override
                                 public void onClick(SweetAlertDialog sweetAlertDialog) {
-                                    Intent l = new Intent(Register.this , MainActivity.class);
+                                    Intent l = new Intent(Register.this, MainActivity.class);
                                     startActivity(l);
                                 }
                             })
                             .show();
+
                 } else {
                     new SweetAlertDialog(Register.this, SweetAlertDialog.ERROR_TYPE)
                             .setTitleText("Error")
@@ -87,8 +120,6 @@ public class Register extends AppCompatActivity implements View.OnClickListener{
                             .show();
                 }
         }
-
-
     }
 
 }
