@@ -67,7 +67,7 @@ public class Login extends AppCompatActivity {
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            Intent l = new Intent(Login.this , Home.class);
+                            Intent l = new Intent(Login.this , uploadImage.class);
                             startActivity(l);
                         }
                     })
