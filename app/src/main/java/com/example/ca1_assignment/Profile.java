@@ -22,6 +22,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
         getSupportActionBar().hide();
+
 //        editProfile = (ImageButton) findViewById(R.id.editProfile);
 //
 //        editProfile.setOnClickListener(new View.OnClickListener() {

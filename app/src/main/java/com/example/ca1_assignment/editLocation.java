@@ -4,6 +4,7 @@ package com.example.ca1_assignment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,11 +12,14 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +35,7 @@ public class editLocation extends AppCompatActivity implements View.OnClickListe
     String location;
     SharedPreferences prefs;
     Integer id;
+    ImageView profilePic;
     public static final String MyPREFERENCES = "MyPrefs";
     public static final String UId = "uId";
 
@@ -40,13 +45,15 @@ public class editLocation extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().hide();
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.edit_profile);
+        profilePic = findViewById((R.id.profilePicture));
         db  = new PasswordDB(this);
-
         prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         id = prefs.getInt(UId,0);
         userDetails = db.getLoginInfo(id);
+        db.updateURL(userDetails, "https://firebasestorage.googleapis.com/v0/b/sp-ande.appspot.com/o/images%2F2023_01_26_05_22_25?alt=media&token=dc8e276d-464f-42d1-9a51-caac283ddde9");
         Log.d("Log:",userDetails.getLocation());
-
+        String value = userDetails.getImageURL();
+        Picasso.get().load(value).into(profilePic);
         tName = (EditText) findViewById((R.id.updateName));
         tName.setText(userDetails.getName());
         tLoc = (TextView) findViewById((R.id.currentLoc));
@@ -91,7 +98,7 @@ public class editLocation extends AppCompatActivity implements View.OnClickListe
 
                 prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
                 id = prefs.getInt(UId,0);
-                db.updateContact(userDetails, userName, location, null);
+                db.updateContact(userDetails, userName, location);
 
                 // Reading all contacts
                 Log.d("Reading: ", "Reading all contacts..");
@@ -108,8 +115,21 @@ public class editLocation extends AppCompatActivity implements View.OnClickListe
                 Intent i = new Intent(editLocation.this, Profile.class);
                 startActivity(i);
                 break;
+            case R.id.uploadimagebtn:
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 3);
+
         }
 
+
+    }
+
+    private void selectImage() {
+
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,100);
 
     }
 }
