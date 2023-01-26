@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -69,8 +70,9 @@ public class uploadImage extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Uploading File....");
         progressDialog.show();
-
-
+        PasswordDB db = new PasswordDB(this);;
+        final String UId = "uId";
+        final String MyPREFERENCES = "MyPrefs";
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.CANADA);
         Date now = new Date();
         String fileName = formatter.format(now);
@@ -85,9 +87,15 @@ public class uploadImage extends AppCompatActivity {
                             @Override
                             public void onSuccess(Uri uri) {
 
+                                //setting new imageURL for profile picture
                                 Upload upload = new Upload(mEditTextFileName.getText().toString().trim(), uri.toString());
-                                String modelId = databaseReference.push().getKey();
-                                databaseReference.child(modelId).setValue(upload);
+                                String imageURL = upload.getImageUrl();
+                                SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+                                Integer id = prefs.getInt(UId,0);
+                                LoginInfo userDetails = db.getLoginInfo(id);
+                                db.updateURL(userDetails, imageURL);
+//                                String modelId = databaseReference.push().getKey();
+//                                databaseReference.child(modelId).setValue(upload);
                                 Toast.makeText(uploadImage.this, "Uploaded Successfully", Toast.LENGTH_SHORT).show();
                                 if (progressDialog.isShowing())
                                     progressDialog.dismiss();

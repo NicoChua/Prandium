@@ -12,7 +12,7 @@ import java.util.List;
 
 
 public class PasswordDB extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NAME = "PasswordDB";
     private static final String TABLE_CONTACTS = "Users";
     private static final String KEY_ID = "id";
@@ -54,7 +54,8 @@ public class PasswordDB extends SQLiteOpenHelper {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
                 + KEY_PASSWORD + " TEXT," + KEY_LOCATION + " TEXT,"
-                + KEY_FAVOURITES + " TEXT" + ")";
+                + KEY_FAVOURITES + " TEXT,"
+                + KEY_imageURL + " TEXT"+ ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 

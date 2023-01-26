@@ -103,7 +103,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/profilePicture"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="116dp"
@@ -167,5 +167,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/updateName"
         app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/uploadimagebtn"
+        android:layout_width="150dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="276dp"
+        android:backgroundTint="#4974A5"
+        android:text="Upload Image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
