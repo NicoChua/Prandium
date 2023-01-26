@@ -68,7 +68,7 @@ public class PasswordDB extends SQLiteOpenHelper {
 //        // Create tables again
 //        onCreate(db);
         if (newVersion > oldVersion) {
-            db.execSQL("ALTER TABLE Users ADD COLUMN favourites ArrayList<Integer> DEFAULT NULL");
+            db.execSQL("ALTER TABLE Users ADD COLUMN favourites String DEFAULT NULL");
         }
     }
 
@@ -98,7 +98,7 @@ public class PasswordDB extends SQLiteOpenHelper {
             cursor.moveToFirst();
 
         LoginInfo LoginInfo = new LoginInfo(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2), cursor.getString(3));
+                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
         // return contact
         return LoginInfo;
     }

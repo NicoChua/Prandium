@@ -38,7 +38,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.editProfile:
-                Intent i = new Intent(this, editLocation.class);
+                Intent i = new Intent(this, Home.class);
                 startActivity(i);
                 break;
             case R.id.logoutAcc:

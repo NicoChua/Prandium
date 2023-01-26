@@ -95,12 +95,13 @@ public class Home extends AppCompatActivity implements View.OnClickListener{
             case R.id.favourite:
                 int count2 = count-1;
                 if (count2 >= 0 &&  count2 < locations.size()) {
-                    Toast.makeText(this, String.valueOf(locations.get(count2)), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, String.valueOf(locations.get(count2)), Toast.LENGTH_SHORT).show();
                     SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
                     int id = prefs.getInt(UId,0);
                     PasswordDB db  = new PasswordDB(Home.this);
                     LoginInfo user = db.getLoginInfo(id);
-                    db.addFavourite(user, locations.get(count2));
+//                    db.addFavourite(user, locations.get(count2));
+                    Toast.makeText(this, String.valueOf(user.getFavourites().toString()), Toast.LENGTH_SHORT).show();
                 }
 
                 //intent to favourites page
