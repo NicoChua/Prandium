@@ -108,7 +108,7 @@ public class PasswordDB extends SQLiteOpenHelper {
     public int updateURL(LoginInfo user, String URL) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_imageURL, user.getImageURL());
+        values.put(KEY_imageURL, URL);
 
         // updating row
         return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
@@ -199,6 +199,19 @@ public class PasswordDB extends SQLiteOpenHelper {
         values.put(KEY_LOCATION, userLoc);
         values.put(KEY_FAVOURITES, fav);
         values.put(KEY_imageURL, img);
+
+        // updating row
+        return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(user.getID()) });
+    }
+
+    // code to update the single contact
+    public int editProfile(LoginInfo user, String userName, String userLoc) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, userName);
+        values.put(KEY_LOCATION, userLoc);
 
         // updating row
         return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
