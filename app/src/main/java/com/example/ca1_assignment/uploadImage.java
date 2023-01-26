@@ -6,10 +6,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.example.ca1_assignment.databinding.ActivityUploadPlacesBinding;
@@ -55,14 +57,14 @@ public class uploadImage extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                uploadImage();
+                uploadImage(imageUri);
 
             }
         });
 
     }
 
-    private void uploadImage() {
+    private void uploadImage(Uri uri) {
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Uploading File....");
@@ -74,21 +76,23 @@ public class uploadImage extends AppCompatActivity {
         String fileName = formatter.format(now);
         storageReference = FirebaseStorage.getInstance().getReference("images/"+fileName);
         databaseReference = FirebaseDatabase.getInstance().getReference("");
-
+        final StorageReference fileRef = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(uri));
         storageReference.putFile(imageUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
 
-                        binding.firebaseimage.setImageURI(null);
-                        Toast.makeText(uploadImage.this,"Successfully Uploaded",Toast.LENGTH_SHORT).show();
-                        Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),
-                                taskSnapshot.getUploadSessionUri().toString());
-                        String uploadId = databaseReference.push().getKey();
-                        databaseReference.child(uploadId).setValue(upload);
-                        if (progressDialog.isShowing())
-                            progressDialog.dismiss();
-
+                                Upload upload = new Upload(mEditTextFileName.getText().toString().trim(), uri.toString());
+                                String modelId = databaseReference.push().getKey();
+                                databaseReference.child(modelId).setValue(upload);
+                                Toast.makeText(uploadImage.this, "Uploaded Successfully", Toast.LENGTH_SHORT).show();
+                                if (progressDialog.isShowing())
+                                    progressDialog.dismiss();
+                            }
+                        });
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -102,8 +106,43 @@ public class uploadImage extends AppCompatActivity {
 
                     }
                 });
+//                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//
+//                        binding.firebaseimage.setImageURI(null);
+//                        Toast.makeText(uploadImage.this,"Successfully Uploaded",Toast.LENGTH_SHORT).show();
+//                        Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),
+//                                taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
+//                        String uploadId = databaseReference.push().getKey();
+//                        databaseReference.child(uploadId).setValue(upload);
+//                        if (progressDialog.isShowing())
+//                            progressDialog.dismiss();
+//
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//
+//
+//                        if (progressDialog.isShowing())
+//                            progressDialog.dismiss();
+//                        Toast.makeText(uploadImage.this,"Failed to Upload",Toast.LENGTH_SHORT).show();
+//
+//
+//                    }
+//                });
 
     }
+
+    private String getFileExtension(Uri mUri){
+
+        ContentResolver cr = getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cr.getType(mUri));
+
+    }
+
 
     private void selectImage() {
 

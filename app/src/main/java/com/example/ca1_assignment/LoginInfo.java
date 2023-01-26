@@ -5,6 +5,8 @@ public class LoginInfo {
     String _name;
     String _password;
     String _location;
+    String _favourites;
+    String _imageURL;
 
     // Constructor
     public LoginInfo(){
@@ -58,4 +60,19 @@ public class LoginInfo {
         this._location = location;
     }
 
+    public String getFavourites(){
+        return this._favourites;
+    }
+
+    public void setFavourites(String favArr){
+        this._favourites = favArr;
+    }
+
+    public String getImageURL(){
+        return this._imageURL;
+    }
+
+    public void setImageURL(String imageURL){
+        this._imageURL = imageURL;
+    }
 }

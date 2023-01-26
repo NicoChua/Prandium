@@ -8,6 +8,10 @@ public class Upload {
         //empty constructor needed
     }
 
+    public Upload(String mImageUrl) {
+        this.mImageUrl = mImageUrl;
+    }
+
     public Upload(String name, String imageUrl) {
         if (name.trim().equals("")) {
             name = "No Name";
