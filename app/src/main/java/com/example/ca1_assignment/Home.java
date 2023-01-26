@@ -55,13 +55,14 @@ public class Home extends AppCompatActivity implements View.OnClickListener{
     SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
     String userLocation = prefs.getString(ULoc,""); //temporary for now
 
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference("Location").child(userLocation);
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("Location").child("North");
 //         Read from the database
         database.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String value = snapshot.getKey(); //locationID
+                    Log.d(TAG, "\nName is: " + value);
                     locations.add(value);
                     String name = snapshot.child("Name").getValue().toString(); //Name
                     names.add(name);
@@ -101,6 +102,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener{
                     PasswordDB db  = new PasswordDB(Home.this);
                     LoginInfo user = db.getLoginInfo(id);
 //                    db.addFavourite(user, locations.get(count2));
+                    user.setFavourites(locations.get(count2));
                     Toast.makeText(this, String.valueOf(user.getFavourites().toString()), Toast.LENGTH_SHORT).show();
                 }
 

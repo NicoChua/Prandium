@@ -36,6 +36,7 @@ public class Login extends AppCompatActivity {
         db  = new PasswordDB(this);
         List<LoginInfo> LoginInfo = db.getAllUsers();
 
+
         String username = intent.getStringExtra("name");
         String password = intent.getStringExtra("password");
         Boolean userFound = false;
