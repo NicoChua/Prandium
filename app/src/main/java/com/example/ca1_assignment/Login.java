@@ -21,10 +21,12 @@ public class Login extends AppCompatActivity {
 
     PasswordDB db ;
     TextView txtListContact ;
-    //Storing ID in SharedPreferences
+    //Storing ID and location in SharedPreferences
+    String loc;
     Integer id;
     public static final String MyPREFERENCES = "MyPrefs";
     public static final String UId = "uId";
+    public static final String ULoc = "uLoc";
 
 
     @Override
@@ -49,6 +51,7 @@ public class Login extends AppCompatActivity {
         for (LoginInfo cn : LoginInfo) {
             if (cn.getName().equals(username) && cn.getPassword().equals(password)) {
                 id = cn.getID();
+                loc = cn.getLocation();
                 userFound = true;
             }
         }
@@ -56,9 +59,10 @@ public class Login extends AppCompatActivity {
             SharedPreferences sp = getSharedPreferences(MyPREFERENCES, Activity.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
             editor.putInt(UId, id);
+            editor.putString(ULoc, loc);
             editor.commit();
-            //show id, not necessary
-            Toast.makeText(this, String.valueOf(id), Toast.LENGTH_SHORT).show();
+            //code to show id, not necessary
+            Toast.makeText(this, String.valueOf(loc), Toast.LENGTH_SHORT).show();
 
             new SweetAlertDialog(Login.this, SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText("Message")
@@ -67,7 +71,7 @@ public class Login extends AppCompatActivity {
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            Intent l = new Intent(Login.this , uploadImage.class);
+                            Intent l = new Intent(Login.this , Home.class);
                             startActivity(l);
                         }
                     })

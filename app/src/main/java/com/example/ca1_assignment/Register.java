@@ -74,7 +74,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 String password = tPhone.getText().toString();
 
                 if (!contactName.isEmpty() && !password.isEmpty()) {
-                    LoginInfo newUser = new LoginInfo(contactName, password, location);
+                    LoginInfo newUser = new LoginInfo(contactName, password, location, null);
 
                     // we are use add value event listener method
                     // which is called with database reference.
@@ -98,7 +98,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                         }
                     });
 
-                    db.addContact(new LoginInfo(contactName, password, location));
+                    db.addContact(new LoginInfo(contactName, password, location, null));
                     new SweetAlertDialog(Register.this, SweetAlertDialog.SUCCESS_TYPE)
                             .setTitleText("Message")
                             .setContentText("You are Registered!")

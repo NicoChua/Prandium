@@ -12,7 +12,7 @@ import java.util.List;
 
 
 public class PasswordDB extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
     private static final String DATABASE_NAME = "PasswordDB";
     private static final String TABLE_CONTACTS = "Users";
     private static final String KEY_ID = "id";
@@ -67,7 +67,7 @@ public class PasswordDB extends SQLiteOpenHelper {
 //        // Create tables again
 //        onCreate(db);
         if (newVersion > oldVersion) {
-            db.execSQL("ALTER TABLE Users ADD COLUMN favourites ArrayList<Integer> DEFAULT NULL");
+            db.execSQL("ALTER TABLE Users ADD COLUMN favourites String DEFAULT NULL");
         }
     }
 
@@ -79,6 +79,7 @@ public class PasswordDB extends SQLiteOpenHelper {
         values.put(KEY_NAME, LoginInfo.getName()); // Contact Name
         values.put(KEY_PASSWORD, LoginInfo.getPassword()); // Contact Password
         values.put(KEY_LOCATION, LoginInfo.getLocation()); // Contact Location
+        values.put(KEY_FAVOURITES, LoginInfo.getFavourites()); // Contact Favourites
 
         // Inserting Row
         db.insert(TABLE_CONTACTS, null, values);
@@ -97,7 +98,7 @@ public class PasswordDB extends SQLiteOpenHelper {
             cursor.moveToFirst();
 
         LoginInfo LoginInfo = new LoginInfo(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2), cursor.getString(3));
+                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
         // return contact
         return LoginInfo;
     }
@@ -176,6 +177,7 @@ public class PasswordDB extends SQLiteOpenHelper {
                 contact.setName(cursor.getString(1));
                 contact.setPassword(cursor.getString(2));
                 contact.setLocation(cursor.getString(3));
+                contact.setFavourites(cursor.getString(4));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -186,13 +188,14 @@ public class PasswordDB extends SQLiteOpenHelper {
     }
 
     // code to update the single contact
-    public int updateContact(LoginInfo user, String userName, String userLoc) {
+    public int updateContact(LoginInfo user, String userName, String userLoc,String fav) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_ID, user.getID());
         values.put(KEY_NAME, userName);
         values.put(KEY_LOCATION, userLoc);
+        values.put(KEY_FAVOURITES, fav);
 
         // updating row
         return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",

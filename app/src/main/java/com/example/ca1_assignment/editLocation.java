@@ -91,7 +91,7 @@ public class editLocation extends AppCompatActivity implements View.OnClickListe
 
                 prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
                 id = prefs.getInt(UId,0);
-                db.updateContact(userDetails, userName, location);
+                db.updateContact(userDetails, userName, location, null);
 
                 // Reading all contacts
                 Log.d("Reading: ", "Reading all contacts..");
