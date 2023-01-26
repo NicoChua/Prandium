@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DFE4DD">
+    android:background="#DFE4DD"
+    tools:context=".MainActivity">>
 
     <Spinner
         android:id="@+id/updateLocation"
@@ -170,13 +171,25 @@
 
     <Button
         android:id="@+id/uploadimagebtn"
+        android:layout_width="95dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="68dp"
+        android:backgroundTint="#4974A5"
+        android:onClick="onClick"
+        android:text="Upload"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/saveImagebtn"
         android:layout_width="150dp"
         android:layout_height="48dp"
         android:layout_marginTop="276dp"
         android:backgroundTint="#4974A5"
-        android:text="Upload Image"
+        android:onClick="onClick"
+        android:text="Save Image"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
