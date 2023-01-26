@@ -12,7 +12,7 @@ import java.util.List;
 
 
 public class PasswordDB extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 34;
     private static final String DATABASE_NAME = "PasswordDB";
     private static final String TABLE_CONTACTS = "Users";
     private static final String KEY_ID = "id";
@@ -62,13 +62,13 @@ public class PasswordDB extends SQLiteOpenHelper {
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-//        // Drop older table if existed
+        // Drop older table if existed
 //        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
 //
 //        // Create tables again
 //        onCreate(db);
         if (newVersion > oldVersion) {
-            db.execSQL("ALTER TABLE Users ADD COLUMN favourites String DEFAULT NULL");
+            db.execSQL("ALTER TABLE Users ADD COLUMN imageURL String DEFAULT NULL");
         }
     }
 
@@ -80,6 +80,7 @@ public class PasswordDB extends SQLiteOpenHelper {
         values.put(KEY_NAME, LoginInfo.getName()); // Contact Name
         values.put(KEY_PASSWORD, LoginInfo.getPassword()); // Contact Password
         values.put(KEY_LOCATION, LoginInfo.getLocation()); // Contact Location
+        values.put(KEY_FAVOURITES, LoginInfo.getLocation()); // Contact Location
 
         // Inserting Row
         db.insert(TABLE_CONTACTS, null, values);
@@ -92,13 +93,13 @@ public class PasswordDB extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_CONTACTS, new String[] { KEY_ID,
-                        KEY_NAME, KEY_PASSWORD, KEY_LOCATION}, KEY_ID + "=?",
+                        KEY_NAME, KEY_PASSWORD, KEY_LOCATION, KEY_FAVOURITES, KEY_imageURL}, KEY_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
         LoginInfo LoginInfo = new LoginInfo(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
         // return contact
         return LoginInfo;
     }
@@ -177,6 +178,8 @@ public class PasswordDB extends SQLiteOpenHelper {
                 contact.setName(cursor.getString(1));
                 contact.setPassword(cursor.getString(2));
                 contact.setLocation(cursor.getString(3));
+                contact.setFavourites(cursor.getString(4));
+                contact.setImageURL(cursor.getString(5));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -187,13 +190,15 @@ public class PasswordDB extends SQLiteOpenHelper {
     }
 
     // code to update the single contact
-    public int updateContact(LoginInfo user, String userName, String userLoc) {
+    public int updateContact(LoginInfo user, String userName, String userLoc, String fav, String img) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_ID, user.getID());
         values.put(KEY_NAME, userName);
         values.put(KEY_LOCATION, userLoc);
+        values.put(KEY_FAVOURITES, fav);
+        values.put(KEY_imageURL, img);
 
         // updating row
         return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
