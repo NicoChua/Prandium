@@ -14,18 +14,20 @@ public class LoginInfo {
     }
 
     // Constructor
-    public LoginInfo(int id, String name, String _password, String _location){
+    public LoginInfo(int id, String name, String _password, String _location, String _favourites){
         this._id = id;
         this._name = name;
         this._password = _password;
         this._location = _location;
+        this._favourites = _favourites;
     }
 
     // Constructor
-    public LoginInfo(String name, String _password, String _location){
+    public LoginInfo(String name, String _password, String _location, String _favourites){
         this._name = name;
         this._password = _password;
         this._location = _location;
+        this._favourites = _favourites;
     }
 
     public int getID(){

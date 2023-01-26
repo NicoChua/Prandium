@@ -1,6 +1,6 @@
 package com.example.ca1_assignment;
 
-// NOTE: this is the testing of firebase, to check if it works.
+//// NOTE: this is the testing of firebase, to check if it works.
 //import androidx.appcompat.app.AppCompatActivity;
 //
 //import android.os.Bundle;
