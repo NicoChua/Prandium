@@ -13,9 +13,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -87,7 +89,24 @@ public class Home extends AppCompatActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         name2 = (TextView) findViewById(R.id.name2);
+
+        int count2 = count-1;
+        SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        int id = prefs.getInt(UId,0);
+        PasswordDB db  = new PasswordDB(Home.this);
+        LoginInfo user = db.getLoginInfo(id);
         retrieveData();
+        //check if user already add location to favourites
+        ArrayList<String> currentFavourites = db.convertStringToArray(user.getFavourites());
+        if (user.getFavourites() != null) {
+            for (int j = 0; j < currentFavourites.size(); j++) {
+                if (currentFavourites.get(j).equals(locations.get(count2))) {
+                    Button button = (Button) findViewById(R.id.favourite);
+                    button.setText("Added");
+                    button.setBackgroundColor(Color.GREEN);
+                }
+            }
+        }
     }
 
     @Override
@@ -95,19 +114,39 @@ public class Home extends AppCompatActivity implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.favourite:
                 int count2 = count-1;
-                if (count2 >= 0 &&  count2 < locations.size()) {
-//                    Toast.makeText(this, String.valueOf(locations.get(count2)), Toast.LENGTH_SHORT).show();
-                    SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
-                    int id = prefs.getInt(UId,0);
-                    PasswordDB db  = new PasswordDB(Home.this);
-                    LoginInfo user = db.getLoginInfo(id);
-//                    db.addFavourite(user, locations.get(count2));
-                    user.setFavourites(locations.get(count2));
-                    Toast.makeText(this, String.valueOf(user.getFavourites().toString()), Toast.LENGTH_SHORT).show();
+                SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+                int id = prefs.getInt(UId,0);
+                PasswordDB db  = new PasswordDB(Home.this);
+                LoginInfo user = db.getLoginInfo(id);
+                Boolean added = false;
+                if (user.getFavourites() == null) {
+                    if (count2 >= 0 &&  count2 < locations.size()) {
+                        db.addFavourite(user, locations.get(count2));
+                        user.setFavourites(locations.get(count2));
+                    }
+                } else {
+                    //check if user already add location to favourites
+                    ArrayList<String> currentFavourites = db.convertStringToArray(user.getFavourites());
+                    for (int i = 0; i < currentFavourites.size(); i++) {
+                        if (currentFavourites.get(i).equals(locations.get(count2))) {
+                            added = true;
+                            Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
+                            Button button = (Button)findViewById(R.id.favourite);
+                            button.setText("Added");
+                            button.setBackgroundColor(Color.GREEN);
+                        }
+                    }
+                    if (added == false) {
+                        if (count2 >= 0 &&  count2 < locations.size()) {
+                            db.addFavourite(user, locations.get(count2));
+                            user.setFavourites(locations.get(count2));
+                        }
+                    }
                 }
-
+                Log.d(TAG, "\nName is: " + user.getFavourites().toString());
+//                Toast.makeText(this, String.valueOf(user.getFavourites().toString()), Toast.LENGTH_SHORT).show();
                 //intent to favourites page
-                //
+                //not necessary
                 break;
             case R.id.next:
                 if (count < names.size()) {

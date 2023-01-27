@@ -21,7 +21,7 @@ public class PasswordDB extends SQLiteOpenHelper {
     private static final String KEY_LOCATION = "location";
     private static final String KEY_FAVOURITES = "favourites";
     private static final String KEY_imageURL = "imageURL";
-    public static String strSeparator = "__,__";
+    public static String strSeparator = ",";
 
 
     public PasswordDB(Context context) {
@@ -119,17 +119,16 @@ public class PasswordDB extends SQLiteOpenHelper {
     public int addFavourite(LoginInfo user, String locationID) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        ArrayList<String> favouritesArr;
-        Cursor cursor = db.query(TABLE_CONTACTS, new String[] {KEY_FAVOURITES}, KEY_ID + "=?",
-                new String[] { String.valueOf(user.getID()) }, null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
-        if (cursor.moveToFirst()) {
-            favouritesArr = convertStringToArray(String.valueOf(cursor));
-            favouritesArr.add(locationID);
-            String updatedFav = convertArrayToString(favouritesArr);
-            values.put(KEY_FAVOURITES, updatedFav);
+        String updatedFav;
+        String favouritesArr = user.getFavourites();
+        if (favouritesArr == null) {
+            updatedFav = locationID;
+        } else {
+            ArrayList<String> favouritesArr2 = convertStringToArray(String.valueOf(favouritesArr));
+            favouritesArr2.add(locationID);
+            updatedFav = convertArrayToString(favouritesArr2);
         }
+        values.put(KEY_FAVOURITES, updatedFav);
 
         // updating row
         return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
