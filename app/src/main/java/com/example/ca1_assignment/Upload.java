@@ -1,8 +1,12 @@
 package com.example.ca1_assignment;
 
+import com.google.firebase.database.Exclude;
+
 public class Upload {
     private String mName;
     private String mImageUrl;
+    private String mDescription;
+    private String mKey;
 
     public Upload() {
         //empty constructor needed
@@ -21,6 +25,16 @@ public class Upload {
         mImageUrl = imageUrl;
     }
 
+    public Upload(String name, String imageUrl, String Description) {
+        if (name.trim().equals("")) {
+            name = "No Name";
+        }
+
+        mName = name;
+        mImageUrl = imageUrl;
+        mDescription = Description;
+    }
+
     public String getName() {
         return mName;
     }
@@ -35,5 +49,23 @@ public class Upload {
 
     public void setImageUrl(String imageUrl) {
         mImageUrl = imageUrl;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public void setDescription(String description) {
+        mDescription = description;
+    }
+
+    @Exclude
+    public String getKey() {
+        return mKey;
+    }
+
+    @Exclude
+    public void setKey(String key) {
+        mKey = key;
     }
 }

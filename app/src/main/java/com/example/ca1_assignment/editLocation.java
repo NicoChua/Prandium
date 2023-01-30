@@ -78,7 +78,10 @@ public class editLocation extends AppCompatActivity implements View.OnClickListe
 //        db.updateURL(userDetails, "https://firebasestorage.googleapis.com/v0/b/sp-ande.appspot.com/o/images%2F2023_01_26_05_22_25?alt=media&token=dc8e276d-464f-42d1-9a51-caac283ddde9");
         Log.d("Log:",userDetails.getLocation());
         String value = userDetails.getImageURL();
-        Picasso.get().load(value).into(profilePic);
+        if (value == null) {}
+        else {
+            Picasso.get().load(value).into(profilePic);
+        }
         tName = (EditText) findViewById((R.id.updateName));
         tName.setText(userDetails.getName());
         tLoc = (TextView) findViewById((R.id.currentLoc));

@@ -24,7 +24,7 @@ public class ViewAllUsers extends AppCompatActivity {
 
         for (LoginInfo cn : LoginInfo) {
             String log = "Id: " + cn.getID() + " ,Name: " + cn.getName() + " ,Favourites: "
-                    + cn.getFavourites();
+                    + cn.getFavourites() + " ,ImageURL: " + cn.getImageURL();
             // Writing Contacts to log
             Log.d("Name: ", log);
         }

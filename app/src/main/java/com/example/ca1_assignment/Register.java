@@ -98,7 +98,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                         }
                     });
 
-                    db.addContact(new LoginInfo(contactName, password, location, "", ""));
+                    db.addContact(new LoginInfo(contactName, password, location, null, null));
                     new SweetAlertDialog(Register.this, SweetAlertDialog.SUCCESS_TYPE)
                             .setTitleText("Message")
                             .setContentText("You are Registered!")
