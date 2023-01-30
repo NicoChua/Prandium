@@ -112,11 +112,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(i);
                 break;
             case R.id.btnListAll:
-//                Intent l = new Intent(this, Register.class);
-//                startActivity(l);
-
                 Intent l = new Intent(this, ViewAllUsers.class);
                 startActivity(l);
+
+//                Intent l = new Intent(this, ViewAllUsers.class);
+//                startActivity(l);
                 break;
         }
     }

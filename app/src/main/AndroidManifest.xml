@@ -48,6 +48,10 @@
             android:name=".Profile"
             android:exported="true" />
         <activity
+            android:name=".favourites"
+            android:exported="true" />
+        <activity android:name=".ImagesActivity"></activity>
+        <activity
             android:name=".editLocation"
             android:exported="true" >
         <intent-filter>

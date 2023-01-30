@@ -5,14 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
+import android.util.Log;
+import static android.content.ContentValues.TAG;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 
 public class PasswordDB extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 34;
+    private static final int DATABASE_VERSION = 35;
     private static final String DATABASE_NAME = "PasswordDB";
     private static final String TABLE_CONTACTS = "Users";
     private static final String KEY_ID = "id";
@@ -63,13 +64,13 @@ public class PasswordDB extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
-//
-//        // Create tables again
-//        onCreate(db);
-        if (newVersion > oldVersion) {
-            db.execSQL("ALTER TABLE Users ADD COLUMN imageURL String DEFAULT NULL");
-        }
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
+
+        // Create tables again
+        onCreate(db);
+//        if (newVersion > oldVersion) {
+//            db.execSQL("ALTER TABLE Users ADD COLUMN imageURL String DEFAULT NULL");
+//        }
     }
 
     // code to add the new contact
@@ -80,7 +81,8 @@ public class PasswordDB extends SQLiteOpenHelper {
         values.put(KEY_NAME, LoginInfo.getName()); // Contact Name
         values.put(KEY_PASSWORD, LoginInfo.getPassword()); // Contact Password
         values.put(KEY_LOCATION, LoginInfo.getLocation()); // Contact Location
-        values.put(KEY_FAVOURITES, LoginInfo.getLocation()); // Contact Location
+        values.put(KEY_FAVOURITES, LoginInfo.getFavourites()); // Contact Favourites
+        values.put(KEY_imageURL, LoginInfo.getImageURL()); // Contact Image url
 
         // Inserting Row
         db.insert(TABLE_CONTACTS, null, values);
@@ -139,21 +141,29 @@ public class PasswordDB extends SQLiteOpenHelper {
     public int deleteFavourites(LoginInfo user, String locationID) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        String updatedFav;
+        String favouritesArr = user.getFavourites();
+        // converting favourites string to an array
+        ArrayList<String> favouritesArr2 = convertStringToArray(String.valueOf(favouritesArr));
+        // creating a new variable to store new array
         ArrayList<String> updatedArr = new ArrayList<String>();
-        Cursor cursor = db.query(TABLE_CONTACTS, new String[] {KEY_FAVOURITES}, KEY_ID + "=?",
-                new String[] { String.valueOf(user.getID()) }, null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
-        if (cursor.moveToFirst()) {
-                ArrayList<String> favouritesArr = convertStringToArray(String.valueOf(cursor));
-                for (int i = 0;i<favouritesArr.size(); i++) {
-                    if (favouritesArr.get(i) != locationID) {
-                        updatedArr.add(favouritesArr.get(i));
-                    }
-                }
-            String updatedFav = convertArrayToString(updatedArr);
-            values.put(KEY_FAVOURITES, updatedFav);
+
+        // for loop to check for id to be deleted
+        for (int i = 0;i<favouritesArr2.size(); i++) {
+
+//            Log.d(TAG,"deleteFav: " + String.valueOf(favouritesArr2.get(i)));
+            if (!favouritesArr2.get(i).equals(locationID)) {
+//                Log.d(TAG, "deleteFav: " + favouritesArr2.get(i));
+//                Log.d(TAG, "deleteFav: " + locationID);
+                updatedArr.add(favouritesArr2.get(i));
+
+            }
         }
+        updatedFav = convertArrayToString(updatedArr);
+//        Log.d(TAG, "deleteFav: " + updatedArr);
+//        Log.d(TAG, "deleteFav: " + updatedFav);
+        values.put(KEY_FAVOURITES, updatedFav);
+
 
         // updating row
         return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",

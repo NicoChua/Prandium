@@ -1,5 +1,4 @@
 package com.example.ca1_assignment;
-
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
@@ -54,8 +53,8 @@ public class Home extends AppCompatActivity implements View.OnClickListener{
 
     public void retrieveData() {
         //Gets location of user
-    SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-    String userLocation = prefs.getString(ULoc,""); //temporary for now
+        SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        String userLocation = prefs.getString(ULoc,""); //temporary for now
 
         DatabaseReference database = FirebaseDatabase.getInstance().getReference("Location").child("North");
 //         Read from the database
@@ -72,7 +71,13 @@ public class Home extends AppCompatActivity implements View.OnClickListener{
                     descriptions.add(description);
                     String image = snapshot.child("Image").getValue().toString(); //Image
                     images.add(image);
-                    Log.d(TAG, "\nName is: " + names.get(count));
+
+                    name2.setText(names.get(count));
+                    image2 = (ImageView) findViewById(R.id.image);
+                    String photo_url = images.get(count);
+                    new ImageLoadTask(photo_url, image2).execute();
+
+                    Log.d(TAG, "\nName Count is: " + names.get(count));
                 }
             }
 
@@ -83,11 +88,12 @@ public class Home extends AppCompatActivity implements View.OnClickListener{
             }
         });
     }
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        getSupportActionBar().hide();
         name2 = (TextView) findViewById(R.id.name2);
 
         int count2 = count-1;
@@ -96,17 +102,18 @@ public class Home extends AppCompatActivity implements View.OnClickListener{
         PasswordDB db  = new PasswordDB(Home.this);
         LoginInfo user = db.getLoginInfo(id);
         retrieveData();
-        //check if user already add location to favourites
-        ArrayList<String> currentFavourites = db.convertStringToArray(user.getFavourites());
-        if (user.getFavourites() != null) {
-            for (int j = 0; j < currentFavourites.size(); j++) {
-                if (currentFavourites.get(j).equals(locations.get(count2))) {
-                    Button button = (Button) findViewById(R.id.favourite);
-                    button.setText("Added");
-                    button.setBackgroundColor(Color.GREEN);
-                }
-            }
-        }
+
+//        //check if user already add location to favourites
+//        ArrayList<String> currentFavourites = db.convertStringToArray(user.getFavourites());
+//        if (user.getFavourites() != null) {
+//            for (int j = 0; j < currentFavourites.size(); j++) {
+//                if (currentFavourites.get(j).equals(locations.get(count2))) {
+//                    Button button = (Button) findViewById(R.id.favourite);
+//                    button.setText("Added");
+//                    button.setBackgroundColor(Color.GREEN);
+//                }
+//            }
+//        }
     }
 
     @Override
@@ -149,15 +156,15 @@ public class Home extends AppCompatActivity implements View.OnClickListener{
                 //not necessary
                 break;
             case R.id.next:
-                if (count < names.size()) {
+                if ((count + 1) < names.size()) {
+                    count++;
                     name2 = (TextView) findViewById(R.id.name2);
                     name2.setText(names.get(count));
 
                     image2 = (ImageView) findViewById(R.id.image);
                     String photo_url = images.get(count);
                     new ImageLoadTask(photo_url, image2).execute();
-
-                    count++;
+                    Log.d(TAG, "\nName is: " + names.get(count));
                 }
                 break;
             case R.id.btnAddContact:

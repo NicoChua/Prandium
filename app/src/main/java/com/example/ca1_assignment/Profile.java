@@ -21,12 +21,15 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class Profile extends AppCompatActivity implements View.OnClickListener{
     private ImageButton editProfile;
     ImageView profilePic;
+    TextView userName, userLoc;
     public static final String MyPREFERENCES = "MyPrefs";
     public static final String UId = "uId";
     private PasswordDB db ;
     private Integer id;
     private LoginInfo userDetails;
     private SharedPreferences prefs;
+    private String _name;
+    private String _loc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +52,29 @@ public class Profile extends AppCompatActivity implements View.OnClickListener{
 //                startActivity(i);
 //            }
 //        });
+
+        // Displaying Profile Picture
         profilePic = findViewById(R.id.profilePic);
-        Log.d(TAG,"\nprofile picture url is: " + userDetails.getImageURL());
+        String value = userDetails.getImageURL();
+        Log.d(TAG, "test: " + value);
+        if (value == null) {}
+        else {
+            Picasso.get().load(value).into(profilePic);
+        }
+
+        //Displaying name and location
+        userName = findViewById(R.id.userName);
+        userLoc = findViewById(R.id.userLoc);
+        _name = userDetails.getName();
+        _loc = userDetails.getLocation();
+        userName.setText(_name);
+        userLoc.setText("Current location:\n" + _loc + " of Singapore");
+//        Log.d(TAG,"\nprofile picture url is: " + userDetails.getImageURL());
 //        new ImageLoadTask(userDetails.getImageURL(),profilePic);
 
 //        Uri pictureUri = Uri.parse(userDetails.getImageURL());
 //        profilePic.setImageURI(pictureUri);
-        String value = userDetails.getImageURL();
-        Picasso.get().load(value).into(profilePic);
+
     }
 
     @Override
@@ -65,6 +83,10 @@ public class Profile extends AppCompatActivity implements View.OnClickListener{
             case R.id.editProfile:
                 Intent i = new Intent(this, editLocation.class);
                 startActivity(i);
+                break;
+            case R.id.favouritesBtn:
+                Intent l = new Intent(this, ImagesActivity.class);
+                startActivity(l);
                 break;
             case R.id.logoutAcc:
                 new SweetAlertDialog(Profile.this, SweetAlertDialog.WARNING_TYPE)
