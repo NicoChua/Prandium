@@ -165,6 +165,23 @@ public class PasswordDB extends SQLiteOpenHelper {
         values.put(KEY_FAVOURITES, updatedFav);
 
 
+        // for loop to check for id to be deleted
+        for (int i = 0;i<favouritesArr2.size(); i++) {
+
+//            Log.d(TAG,"deleteFav: " + String.valueOf(favouritesArr2.get(i)));
+            if (!favouritesArr2.get(i).equals(locationID)) {
+                Log.d(TAG, "deleteFav: " + favouritesArr2.get(i));
+                Log.d(TAG, "deleteFav: " + locationID);
+                updatedArr.add(favouritesArr2.get(i));
+
+            }
+        }
+        updatedFav = convertArrayToString(updatedArr);
+        Log.d(TAG, "deleteFav: " + updatedArr);
+//        Log.d(TAG, "deleteFav: " + updatedFav);
+        values.put(KEY_FAVOURITES, updatedFav);
+
+
         // updating row
         return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(user.getID()) });

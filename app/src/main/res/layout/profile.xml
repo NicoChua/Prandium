@@ -243,11 +243,12 @@
         app:srcCompat="@drawable/nav_default2" />
 
     <ImageButton
-        android:id="@+id/imageButton6"
+        android:id="@+id/toHome"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginBottom="8dp"
         android:background="#DFE4DD"
+        android:onClick="onClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageButton5"
         app:layout_constraintHorizontal_bias="0.304"

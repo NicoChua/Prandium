@@ -41,17 +41,6 @@ public class Profile extends AppCompatActivity implements View.OnClickListener{
         id = prefs.getInt(UId,0);
         Log.d(TAG, "\nID is: " + id);
         userDetails = db.getLoginInfo(id);
-        //updating profile pic using default hard code(MUST BE REMOVED)
-//        db.updateURL(userDetails, "https://firebasestorage.googleapis.com/v0/b/sp-ande.appspot.com/o/images%2F2023_01_26_05_22_25?alt=media&token=dc8e276d-464f-42d1-9a51-caac283ddde9");
-//        editProfile = (ImageButton) findViewById(R.id.editProfile);
-//
-//        editProfile.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(Profile.this, editLocation.class);
-//                startActivity(i);
-//            }
-//        });
 
         // Displaying Profile Picture
         profilePic = findViewById(R.id.profilePic);
@@ -69,11 +58,6 @@ public class Profile extends AppCompatActivity implements View.OnClickListener{
         _loc = userDetails.getLocation();
         userName.setText(_name);
         userLoc.setText("Current location:\n" + _loc + " of Singapore");
-//        Log.d(TAG,"\nprofile picture url is: " + userDetails.getImageURL());
-//        new ImageLoadTask(userDetails.getImageURL(),profilePic);
-
-//        Uri pictureUri = Uri.parse(userDetails.getImageURL());
-//        profilePic.setImageURI(pictureUri);
 
     }
 
@@ -107,7 +91,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener{
                                 editor.clear();
                                 editor.apply();
                                 sweetAlertDialog.dismissWithAnimation();
-                                Intent l = new Intent(Profile.this , Login.class);
+                                Intent l = new Intent(Profile.this , MainActivity.class);
                                 startActivity(l);
                             }
                         })
@@ -135,11 +119,15 @@ public class Profile extends AppCompatActivity implements View.OnClickListener{
                                 editor.clear();
                                 editor.apply();
                                 sweetAlertDialog.dismissWithAnimation();
-                                Intent l = new Intent(Profile.this , Login.class);
+                                Intent l = new Intent(Profile.this , MainActivity.class);
                                 startActivity(l);
                             }
                         })
                         .show();
+                break;
+            case R.id.toHome:
+                Intent m = new Intent(Profile.this, Home.class);
+                startActivity(m);
                 break;
         }
     }

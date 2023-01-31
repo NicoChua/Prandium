@@ -36,13 +36,13 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
     ArrayList<String> userFavourites;
     public static final String MyPREFERENCES = "MyPrefs";
     public static final String UId = "uId";
+    public static final String UCount = "uCount";
     private DatabaseReference mDatabaseRef;
     private List<Upload> mUploads;
 
 
     //Creating arraylist to store details
     ArrayList<String> images = new ArrayList<String>();
-    //    ArrayList<String> images = new ArrayList<String>();
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> descriptions = new ArrayList<>();
     ArrayList<String> locations = new ArrayList<>();
@@ -64,8 +64,6 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
             new android.os.Handler(Looper.getMainLooper()).postDelayed(
                     new Runnable() {
                         public void run() {
-//                            Log.d("tag", "This'll run 3000 milliseconds later");
-//                            Toast.makeText(ImagesActivity.this, "There are currently no liked places.", Toast.LENGTH_SHORT).show();
                             // Make an alert for no liked places
                             new SweetAlertDialog(ImagesActivity.this, SweetAlertDialog.WARNING_TYPE)
                                     .setTitleText("No liked places yet")
@@ -99,7 +97,6 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
                             descriptions.add(description);
                             String image = postSnapshot.child("Image").getValue().toString(); //Image
                             images.add(image);
-//                    Upload upload = postSnapshot.getValue(Upload.class);
                             Upload upload = new Upload(name, image, description);
                             upload.setKey(locationID);
                             Log.d("testing21", "key:" + upload.getKey());
@@ -107,41 +104,6 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
                         }
 
                     }
-
-//                    Log.d("Reading: ", "dataSnapshot: " + dataSnapshot);
-//                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//                        Log.d("Reading: ", "postSnapshot: " + postSnapshot);
-//                        // The string value is North, South, East, West
-//                        String test = postSnapshot.getChildren().toString();
-//                        Log.d("Reading: ", "test: " + test);
-//                        String key = postSnapshot.getKey();
-////                        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Location").child(value);
-//                        Log.d("Reading: ", "value: " + key);
-//                        for (int i = 0 ; i < userFavourites.size() ; i++) {
-//                            String value1 = postSnapshot.child(userFavourites.get(i)).getValue().toString();
-//                            Log.d("Reading: ", "for loop value: " + value1);
-//                        }
-//
-////                        Log.d("Reading: ", "object value: " + value1);
-//                        DataSnapshot value = (DataSnapshot) postSnapshot.getValue();
-//                        for (DataSnapshot postSnapshot2 : value.getChildren()) {
-//                            String locationID = postSnapshot2.getKey();
-//                            Log.d("Reading: ", "location id: " + locationID);
-//                            if (userFavourites.contains(locationID)) {
-//                                locations.add(locationID);
-//                                String name = postSnapshot2.child("Name").getValue().toString(); //Name
-//                                names.add(name);
-//                                String description = postSnapshot2.child("Description").getValue().toString(); //Description
-//                                descriptions.add(description);
-//                                String image = postSnapshot2.child("Image").getValue().toString(); //Image
-//                                images.add(image);
-////                    Upload upload = postSnapshot.getValue(Upload.class);
-//                                Upload upload = new Upload(name, image, description);
-//                                upload.setKey(locationID);
-//                                Log.d("testing21", "key:" + upload.getKey());
-//                                mUploads.add(upload);
-//                            }
-//                        }
 
                     mAdapter = new ImageAdapter(ImagesActivity.this, (ArrayList<Upload>) mUploads);
 
@@ -164,11 +126,22 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
     @Override
     public void onItemClick(int position) {
         Toast.makeText(this, "Normal click at position: " + position, Toast.LENGTH_SHORT).show();
+        //intent
+        Intent h = new Intent(this, DetailedDescription.class);
+
+        SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+        int count = prefs.getInt(UCount, 0);
+        h.putExtra("locationName", names.get(count));
+        h.putExtra("locationImage", images.get(count));
+        h.putExtra("locationDesc", descriptions.get(count));
+
+        startActivity(h);
     }
 
     @Override
     public void onWhatEverClick(int position) {
         Toast.makeText(this, "Whatever click at position: " + position, Toast.LENGTH_SHORT).show();
+        //intent
     }
 
     @Override

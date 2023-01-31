@@ -42,6 +42,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener{
     public static final String MyPREFERENCES = "MyPrefs";
     public static final String UId = "uId";
     public static final String ULoc = "uLoc";
+    public static final String UCount = "uCount";
     int count = 0;
 
     //Creating arraylist to store details
@@ -54,9 +55,9 @@ public class Home extends AppCompatActivity implements View.OnClickListener{
     public void retrieveData() {
         //Gets location of user
         SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        String userLocation = prefs.getString(ULoc,""); //temporary for now
+        String userLocation = prefs.getString(ULoc, "");
 
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference("Location").child("North");
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("Location").child(userLocation);
 //         Read from the database
         database.addValueEventListener(new ValueEventListener() {
             @Override
@@ -64,7 +65,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener{
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String value = snapshot.getKey(); //locationID
                     Log.d(TAG, "\nName is: " + value);
-                    locations.add(value);
+                    locations.add(value); //locationid
                     String name = snapshot.child("Name").getValue().toString(); //Name
                     names.add(name);
                     String description = snapshot.child("Description").getValue().toString(); //Description
@@ -77,7 +78,21 @@ public class Home extends AppCompatActivity implements View.OnClickListener{
                     String photo_url = images.get(count);
                     new ImageLoadTask(photo_url, image2).execute();
 
-                    Log.d(TAG, "\nName Count is: " + names.get(count));
+                    //check if user already add location to favourites
+                    SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+                    int id = prefs.getInt(UId, 0);
+                    PasswordDB db = new PasswordDB(Home.this);
+                    LoginInfo user = db.getLoginInfo(id);
+                    Button button = (Button) findViewById(R.id.favourite);
+                    if (user.getFavourites() != null) {
+                        ArrayList<String> currentFavourites = db.convertStringToArray(user.getFavourites());
+                        for (int j = 0; j < currentFavourites.size(); j++) {
+                            if (currentFavourites.get(j).equals(locations.get(count))) {
+                                button.setText("Added");
+                                button.setBackgroundColor(Color.GREEN);
+                            }
+                        }
+                    }
                 }
             }
 
@@ -95,65 +110,55 @@ public class Home extends AppCompatActivity implements View.OnClickListener{
         setContentView(R.layout.activity_home);
         getSupportActionBar().hide();
         name2 = (TextView) findViewById(R.id.name2);
-
-        int count2 = count-1;
-        SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
-        int id = prefs.getInt(UId,0);
-        PasswordDB db  = new PasswordDB(Home.this);
-        LoginInfo user = db.getLoginInfo(id);
         retrieveData();
 
-//        //check if user already add location to favourites
-//        ArrayList<String> currentFavourites = db.convertStringToArray(user.getFavourites());
-//        if (user.getFavourites() != null) {
-//            for (int j = 0; j < currentFavourites.size(); j++) {
-//                if (currentFavourites.get(j).equals(locations.get(count2))) {
-//                    Button button = (Button) findViewById(R.id.favourite);
-//                    button.setText("Added");
-//                    button.setBackgroundColor(Color.GREEN);
-//                }
-//            }
-//        }
+        SharedPreferences sp = getSharedPreferences(MyPREFERENCES, Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt(UCount, count);
+        editor.commit();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.favourite:
-                int count2 = count-1;
                 SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
-                int id = prefs.getInt(UId,0);
-                PasswordDB db  = new PasswordDB(Home.this);
+                int id = prefs.getInt(UId, 0);
+                PasswordDB db = new PasswordDB(Home.this);
                 LoginInfo user = db.getLoginInfo(id);
                 Boolean added = false;
                 if (user.getFavourites() == null) {
-                    if (count2 >= 0 &&  count2 < locations.size()) {
-                        db.addFavourite(user, locations.get(count2));
-                        user.setFavourites(locations.get(count2));
+                    if (count >= 0 && count < locations.size()) {
+                        db.addFavourite(user, locations.get(count));
+                        user.setFavourites(locations.get(count));
+
+                        Button button = (Button) findViewById(R.id.favourite);
+                        button.setText("Added");
+                        button.setBackgroundColor(Color.GREEN);
                     }
                 } else {
-                    //check if user already add location to favourites
+                    //check if user already added location to favourites
                     ArrayList<String> currentFavourites = db.convertStringToArray(user.getFavourites());
                     for (int i = 0; i < currentFavourites.size(); i++) {
-                        if (currentFavourites.get(i).equals(locations.get(count2))) {
+                        if (currentFavourites.get(i).equals(locations.get(count))) {
                             added = true;
                             Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show();
-                            Button button = (Button)findViewById(R.id.favourite);
+                            Button button = (Button) findViewById(R.id.favourite);
                             button.setText("Added");
                             button.setBackgroundColor(Color.GREEN);
                         }
                     }
                     if (added == false) {
-                        if (count2 >= 0 &&  count2 < locations.size()) {
-                            db.addFavourite(user, locations.get(count2));
-                            user.setFavourites(locations.get(count2));
+                        if (count >= 0 && count < locations.size()) {
+                            db.addFavourite(user, locations.get(count));
+                            user.setFavourites(locations.get(count));
+
+                            Button button = (Button) findViewById(R.id.favourite);
+                            button.setText("Added");
+                            button.setBackgroundColor(Color.GREEN);
                         }
                     }
                 }
-                Log.d(TAG, "\nName is: " + user.getFavourites().toString());
-//                Toast.makeText(this, String.valueOf(user.getFavourites().toString()), Toast.LENGTH_SHORT).show();
-                //intent to favourites page
-                //not necessary
                 break;
             case R.id.next:
                 if ((count + 1) < names.size()) {
@@ -165,24 +170,25 @@ public class Home extends AppCompatActivity implements View.OnClickListener{
                     String photo_url = images.get(count);
                     new ImageLoadTask(photo_url, image2).execute();
                     Log.d(TAG, "\nName is: " + names.get(count));
+
+                    Button button = (Button) findViewById(R.id.favourite);
+                    button.setText("Favourite");
+                    button.setBackgroundColor(Color.parseColor("#a4cc44"));
+
+                    SharedPreferences sp = getSharedPreferences(MyPREFERENCES, Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putInt(UCount, count);
+                    editor.commit();
                 }
                 break;
-            case R.id.btnAddContact:
-                EditText txtname = findViewById(R.id.username);
-                String name =  txtname.getText().toString();
-                EditText txtpassword = findViewById(R.id.password);
-                String password =  txtpassword.getText().toString();
+            case R.id.linearLayout:
+                Intent h = new Intent(this, DetailedDescription.class);
 
-                Intent i = new Intent(this, Login.class);
+                h.putExtra("locationName", names.get(count));
+                h.putExtra("locationImage", images.get(count));
+                h.putExtra("locationDesc", descriptions.get(count));
 
-                i.putExtra("name", name);
-                i.putExtra("password", password);
-
-                startActivity(i);
-                break;
-            case R.id.btnListAll:
-                Intent l = new Intent(this, Register.class);
-                startActivity(l);
+                startActivity(h);
                 break;
             case R.id.toProfile:
                 Intent m = new Intent(this, Profile.class);

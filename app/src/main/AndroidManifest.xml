@@ -13,14 +13,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CA1_Assignment"
         tools:targetApi="31">
-<!--        <activity-->
-<!--            android:name=".favourites"-->
-<!--            android:exported="false">-->
-<!--            <meta-data-->
-<!--                android:name="android.app.lib_name"-->
-<!--                android:value="" />-->
-<!--        </activity>-->
-        <activity android:name=".ViewAllUsers"></activity>
+        <activity
+            android:name=".DetailedDescription"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <!-- <activity -->
+        <!-- android:name=".favourites" -->
+        <!-- android:exported="false"> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.app.lib_name" -->
+        <!-- android:value="" /> -->
+        <!-- </activity> -->
+        <activity android:name=".ViewAllUsers" />
         <activity
             android:name=".Home"
             android:exported="true">
@@ -53,12 +60,12 @@
         <activity android:name=".ImagesActivity"></activity>
         <activity
             android:name=".editLocation"
-            android:exported="true" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".uploadImage"

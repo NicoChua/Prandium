@@ -29,6 +29,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/nav_home1" />
 
+    <TextView
+        android:id="@+id/name2"
+        android:layout_width="403dp"
+        android:layout_height="59dp"
+        android:text="test"
+        android:textAlignment="center"
+        android:textSize="32dp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/d"
+        app:layout_constraintTop_toBottomOf="@+id/image"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="4dp" />
+
     <ImageButton
         android:id="@+id/toProfile"
         android:layout_width="100dp"
@@ -44,63 +57,34 @@
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/nav_home2" />
 
-    <Button
-        android:id="@+id/next"
-        android:layout_width="119dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="28dp"
-        android:onClick="onClick"
-        android:text="Next"
-        app:layout_constraintBottom_toTopOf="@+id/view3"
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="416dp"
+        android:layout_height="234dp"
+        android:layout_marginBottom="48dp"
+        android:layout_weight="20"
+        app:layout_constraintBottom_toTopOf="@+id/d"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.776"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.975" />
+        app:layout_constraintVertical_bias="0.032"
+        tools:srcCompat="@tools:sample/avatars" />
 
-    <Button
-        android:id="@+id/favourite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:backgroundTint="@android:color/holo_green_light"
-        android:onClick="onClick"
-        android:text="Favourite"
-        app:layout_constraintBottom_toBottomOf="@+id/view3"
-        app:layout_constraintEnd_toStartOf="@+id/next"
-        app:layout_constraintHorizontal_bias="0.329"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.973" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="349dp"
-        android:layout_height="486dp"
-        android:background="@drawable/white_background"
-        android:orientation="vertical"
-        android:onClick="onClick"
-        app:layout_constraintBottom_toTopOf="@+id/view3"
+    <TextView
+        android:id="@+id/d"
+        android:layout_width="410dp"
+        android:layout_height="257dp"
+        android:layout_marginBottom="72dp"
+        android:text="@string/bold"
+        android:textSize="22dp"
+        android:padding="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.466">
-
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="match_parent"
-            android:layout_height="378dp"
-            android:layout_weight="20"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <TextView
-            android:id="@+id/name2"
-            android:layout_width="match_parent"
-            android:layout_height="78dp"
-            android:text=""
-            android:textAlignment="center" />
-
-    </LinearLayout>
+        app:layout_constraintVertical_bias="0.736" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

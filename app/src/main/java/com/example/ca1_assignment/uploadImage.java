@@ -114,32 +114,6 @@ public class uploadImage extends AppCompatActivity {
 
                     }
                 });
-//                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                    @Override
-//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//
-//                        binding.firebaseimage.setImageURI(null);
-//                        Toast.makeText(uploadImage.this,"Successfully Uploaded",Toast.LENGTH_SHORT).show();
-//                        Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),
-//                                taskSnapshot.getMetadata().getReference().getDownloadUrl().toString());
-//                        String uploadId = databaseReference.push().getKey();
-//                        databaseReference.child(uploadId).setValue(upload);
-//                        if (progressDialog.isShowing())
-//                            progressDialog.dismiss();
-//
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//
-//
-//                        if (progressDialog.isShowing())
-//                            progressDialog.dismiss();
-//                        Toast.makeText(uploadImage.this,"Failed to Upload",Toast.LENGTH_SHORT).show();
-//
-//
-//                    }
-//                });
 
     }
 

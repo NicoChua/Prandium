@@ -11,13 +11,6 @@ public class ViewAllUsers extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         PasswordDB db = new PasswordDB(this);
 
-//        // Inserting Contacts
-//        Log.d("Insert Data : ", "Inserting ..");
-//        db.addContact(new LoginInfo("Mary Jane", "86552288"));
-//        db.addContact(new Contact("Nina Kim", "91198800"));
-//        db.addContact(new Contact("Tommy Tan", "92681122"));
-//        db.addContact(new Contact("Koji Lim", "95334321"));
-
         // Reading all contacts
         Log.d("Reading: ", "Reading all contacts..");
         List<LoginInfo> LoginInfo = db.getAllUsers();

@@ -68,14 +68,12 @@ public class editLocation extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_edit_profile);
         profilePic = findViewById((R.id.profilePicture));
         db  = new PasswordDB(this);
         prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         id = prefs.getInt(UId,0);
         userDetails = db.getLoginInfo(id);
-//        db.updateURL(userDetails, "https://firebasestorage.googleapis.com/v0/b/sp-ande.appspot.com/o/images%2F2023_01_26_05_22_25?alt=media&token=dc8e276d-464f-42d1-9a51-caac283ddde9");
         Log.d("Log:",userDetails.getLocation());
         String value = userDetails.getImageURL();
         if (value == null) {}
@@ -97,7 +95,6 @@ public class editLocation extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 location = spinner.getSelectedItem().toString();
-//                Toast.makeText(Register.this, spinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -105,15 +102,6 @@ public class editLocation extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-//        backButton = (Button) findViewById(R.id.updateBackButton);
-//
-//        backButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(editLocation.this, MainActivity.class);
-//                startActivity(i);
-//            }
-//        });
     }
 
     @Override
@@ -135,13 +123,6 @@ public class editLocation extends AppCompatActivity implements View.OnClickListe
                             .setTitleText("Successful")
                             .setContentText("Updated info successfully!")
                             .setConfirmText("OK")
-//                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-//                                @Override
-//                                public void onClick(SweetAlertDialog sweetAlertDialog) {
-//                                    Intent l = new Intent(editLocation.this , Home.class);
-//                                    startActivity(l);
-//                                }
-//                            })
                             .show();
                 }
                 else {
@@ -149,13 +130,6 @@ public class editLocation extends AppCompatActivity implements View.OnClickListe
                             .setTitleText("Error")
                             .setContentText("Update Unsuccessful, please try again!")
                             .setConfirmText("OK")
-//                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-//                                @Override
-//                                public void onClick(SweetAlertDialog sweetAlertDialog) {
-//                                    Intent l = new Intent(editLocation.this , MainActivity.class);
-//                                    startActivity(l);
-//                                }
-//                            })
                             .show();
                 }
 
@@ -180,6 +154,10 @@ public class editLocation extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.saveImagebtn:
                 uploadImage(imageUri);
+                break;
+            case R.id.toHome:
+                Intent m = new Intent(this, Home.class);
+                startActivity(m);
                 break;
 
         }
