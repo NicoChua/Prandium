@@ -76,19 +76,36 @@
 
     <TextView
         android:id="@+id/d"
-        android:layout_width="410dp"
-        android:layout_height="257dp"
+        android:layout_width="414dp"
+        android:layout_height="215dp"
         android:layout_marginBottom="72dp"
         android:background="#DFE4DD"
-        android:padding="30dp"
+        android:paddingLeft="5dp"
+        android:scrollbars="vertical"
         android:text="@string/bold"
         android:textSize="22dp"
-        android:scrollbars = "vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.888" />
+        app:layout_constraintVertical_bias="0.799" />
+
+    <TextView
+        android:id="@+id/link"
+        android:layout_width="407dp"
+        android:layout_height="33dp"
+        android:layout_marginBottom="128dp"
+        android:autoLink="web"
+        android:background="#DFE4DD"
+        android:linksClickable="true"
+        android:paddingLeft="5dp"
+        android:text="@string/link"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

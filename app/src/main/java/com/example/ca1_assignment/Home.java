@@ -50,6 +50,7 @@ public class Home extends AppCompatActivity implements View.OnClickListener{
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> descriptions = new ArrayList<>();
     ArrayList<String> locations = new ArrayList<>();
+    ArrayList<String> links = new ArrayList<>();
 
 
     public void retrieveData() {
@@ -72,7 +73,8 @@ public class Home extends AppCompatActivity implements View.OnClickListener{
                     descriptions.add(description);
                     String image = snapshot.child("Image").getValue().toString(); //Image
                     images.add(image);
-
+                    String link = snapshot.child("Link").getValue().toString(); //Link
+                    links.add(link);
                     name2.setText(names.get(count));
                     image2 = (ImageView) findViewById(R.id.image);
                     String photo_url = images.get(count);
@@ -183,11 +185,11 @@ public class Home extends AppCompatActivity implements View.OnClickListener{
                 break;
             case R.id.linearLayout:
                 Intent h = new Intent(this, DetailedDescription.class);
-
                 h.putExtra("locationName", names.get(count));
                 h.putExtra("locationImage", images.get(count));
                 h.putExtra("locationDesc", descriptions.get(count));
-
+                h.putExtra("locationLink", links.get(count));
+//                h.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(h);
                 break;
             case R.id.toProfile:
