@@ -7,6 +7,7 @@ public class Upload {
     private String mImageUrl;
     private String mDescription;
     private String mKey;
+    private String mLink;
 
     public Upload() {
         //empty constructor needed
@@ -35,6 +36,17 @@ public class Upload {
         mDescription = Description;
     }
 
+    public Upload(String name, String imageUrl, String Description, String Link) {
+        if (name.trim().equals("")) {
+            name = "No Name";
+        }
+
+        mName = name;
+        mImageUrl = imageUrl;
+        mDescription = Description;
+        mLink = Link;
+    }
+
     public String getName() {
         return mName;
     }
@@ -57,6 +69,14 @@ public class Upload {
 
     public void setDescription(String description) {
         mDescription = description;
+    }
+
+    public String getLink() {
+        return mLink;
+    }
+
+    public void setLink(String link) {
+        mLink = link;
     }
 
     @Exclude

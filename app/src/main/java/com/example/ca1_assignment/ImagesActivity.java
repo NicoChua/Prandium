@@ -2,6 +2,7 @@ package com.example.ca1_assignment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -46,6 +47,7 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> descriptions = new ArrayList<>();
     ArrayList<String> locations = new ArrayList<>();
+    ArrayList<String> links = new ArrayList<>();
 
 
     @Override
@@ -97,9 +99,11 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
                             descriptions.add(description);
                             String image = postSnapshot.child("Image").getValue().toString(); //Image
                             images.add(image);
-                            Upload upload = new Upload(name, image, description);
+                            String link = postSnapshot.child("Link").getValue().toString(); //Link
+                            links.add(link);
+                            Upload upload = new Upload(name, image, description, link);
                             upload.setKey(locationID);
-                            Log.d("testing21", "key:" + upload.getKey());
+//                            Log.d("testing21", "key:" + upload.getKey());
                             mUploads.add(upload);
                         }
 
@@ -134,13 +138,14 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
         h.putExtra("locationName", names.get(count));
         h.putExtra("locationImage", images.get(count));
         h.putExtra("locationDesc", descriptions.get(count));
-
+        h.putExtra("locationLink", links.get(count));
+//        h.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(h);
     }
 
     @Override
     public void onWhatEverClick(int position) {
-        Toast.makeText(this, "Whatever click at position: " + position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Selected at position: " + position, Toast.LENGTH_SHORT).show();
         //intent
     }
 

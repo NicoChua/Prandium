@@ -6,4 +6,5 @@
     <string name="register">Register</string>
     <string name="txtMsg1">Don\'t have an account? Register here!</string>
     <string name="bold"><b>Description: </b></string>
+    <string name="link"><b>Link: </b></string>
 </resources>
