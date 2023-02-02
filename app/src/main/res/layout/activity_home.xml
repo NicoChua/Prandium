@@ -90,8 +90,9 @@
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
-            android:layout_height="378dp"
+            android:layout_height="match_parent"
             android:layout_weight="20"
+            android:layout_margin="15dp"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
@@ -99,6 +100,8 @@
             android:layout_width="match_parent"
             android:layout_height="78dp"
             android:text=""
+            android:textSize="26dp"
+            android:fontFamily="@font/roboto"
             android:textAlignment="center" />
 
     </LinearLayout>

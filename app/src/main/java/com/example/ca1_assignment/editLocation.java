@@ -25,8 +25,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ca1_assignment.databinding.ActivityEditProfileBinding;
-import com.example.ca1_assignment.databinding.ActivityUploadPlacesBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -158,6 +156,10 @@ public class editLocation extends AppCompatActivity implements View.OnClickListe
             case R.id.toHome:
                 Intent m = new Intent(this, Home.class);
                 startActivity(m);
+                break;
+            case R.id.toProfile:
+                Intent n = new Intent(this, Profile.class);
+                startActivity(n);
                 break;
 
         }

@@ -87,14 +87,12 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                             mDatabase.setValue(newUser);
 
                             // after adding this data we are showing toast message.
-                            Toast.makeText(Register.this, "data added", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                             // if the data is not added or it is cancelled then
                             // we are displaying a failure toast message.
-                            Toast.makeText(Register.this, "Fail to add data " + error, Toast.LENGTH_SHORT).show();
                         }
                     });
 

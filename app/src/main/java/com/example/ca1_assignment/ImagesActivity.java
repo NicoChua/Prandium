@@ -1,5 +1,7 @@
 package com.example.ca1_assignment;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -25,7 +27,7 @@ import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class ImagesActivity extends AppCompatActivity implements ImageAdapter.OnItemClickListener {
+public class ImagesActivity extends AppCompatActivity implements ImageAdapter.OnItemClickListener, View.OnClickListener {
     private RecyclerView mRecyclerView;
     private ImageAdapter mAdapter;
 
@@ -130,16 +132,18 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
     @Override
     public void onItemClick(int position) {
         Toast.makeText(this, "Normal click at position: " + position, Toast.LENGTH_SHORT).show();
-        //intent
         Intent h = new Intent(this, DetailedDescription.class);
 
         SharedPreferences prefs = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
         int count = prefs.getInt(UCount, 0);
-        h.putExtra("locationName", names.get(count));
-        h.putExtra("locationImage", images.get(count));
-        h.putExtra("locationDesc", descriptions.get(count));
-        h.putExtra("locationLink", links.get(count));
-//        h.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        h.putExtra("locationName", names.get(position));
+        h.putExtra("locationImage", images.get(position));
+        h.putExtra("locationDesc", descriptions.get(position));
+        h.putExtra("locationLink", links.get(position));
+
+        Log.d(TAG, "\nlocation is: " + names.get(position));
+        Log.d(TAG, "\nimages is: " + images.get(position));
+        Log.d(TAG, "\ndescriptions is: " + descriptions.get(position));
         startActivity(h);
     }
 
@@ -177,5 +181,18 @@ public class ImagesActivity extends AppCompatActivity implements ImageAdapter.On
                     }
                 })
                 .show();
+    }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.toHome:
+                Intent i = new Intent(this, Home.class);
+                startActivity(i);
+                break;
+            case R.id.toProfile:
+                Intent j = new Intent(this, Profile.class);
+                startActivity(j);
+                break;
+        }
     }
 }

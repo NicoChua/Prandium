@@ -177,10 +177,21 @@ public class Home extends AppCompatActivity implements View.OnClickListener{
                     button.setText("Favourite");
                     button.setBackgroundColor(Color.parseColor("#a4cc44"));
 
-                    SharedPreferences sp = getSharedPreferences(MyPREFERENCES, Activity.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putInt(UCount, count);
-                    editor.commit();
+                    //check if user already add location to favourites
+                    SharedPreferences prefs2 = getSharedPreferences(MyPREFERENCES, MODE_PRIVATE);
+                    int id2 = prefs2.getInt(UId, 0);
+                    PasswordDB db2 = new PasswordDB(Home.this);
+                    LoginInfo user2 = db2.getLoginInfo(id2);
+                    Button button2 = (Button) findViewById(R.id.favourite);
+                    if (user2.getFavourites() != null) {
+                        ArrayList<String> currentFavourites = db2.convertStringToArray(user2.getFavourites());
+                        for (int j = 0; j < currentFavourites.size(); j++) {
+                            if (currentFavourites.get(j).equals(locations.get(count))) {
+                                button.setText("Added");
+                                button.setBackgroundColor(Color.GREEN);
+                            }
+                        }
+                    }
                 }
                 break;
             case R.id.linearLayout:

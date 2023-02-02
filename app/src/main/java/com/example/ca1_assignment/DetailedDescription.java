@@ -3,6 +3,7 @@ package com.example.ca1_assignment;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
@@ -13,7 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
-public class DetailedDescription extends AppCompatActivity {
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
+public class DetailedDescription extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,5 +53,19 @@ public class DetailedDescription extends AppCompatActivity {
         Uri uriUrl = Uri.parse(url);
         Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
         startActivity(launchBrowser);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.toHome:
+                Intent m = new Intent(DetailedDescription.this, Home.class);
+                startActivity(m);
+                break;
+            case R.id.toProfile:
+                Intent n = new Intent(DetailedDescription.this, Profile.class);
+                startActivity(n);
+                break;
+        }
     }
 }
