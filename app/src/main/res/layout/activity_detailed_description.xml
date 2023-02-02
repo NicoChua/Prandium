@@ -25,22 +25,8 @@
         android:layout_marginBottom="8dp"
         android:background="#DFE4DD"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.304"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/nav_home1" />
-
-    <TextView
-        android:id="@+id/name2"
-        android:layout_width="403dp"
-        android:layout_height="59dp"
-        android:text="test"
-        android:textAlignment="center"
-        android:textSize="32dp"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/d"
-        app:layout_constraintTop_toBottomOf="@+id/image"
-        app:layout_constraintVertical_bias="1.0"
-        tools:layout_editor_absoluteX="4dp" />
 
     <ImageButton
         android:id="@+id/toProfile"
@@ -61,7 +47,7 @@
     <ImageView
         android:id="@+id/image"
         android:layout_width="416dp"
-        android:layout_height="234dp"
+        android:layout_height="416dp"
         android:layout_marginBottom="48dp"
         android:layout_weight="20"
         app:layout_constraintBottom_toTopOf="@+id/d"
@@ -73,18 +59,36 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
+        android:id="@+id/name2"
+        android:layout_width="416dp"
+        android:layout_height="59dp"
+        android:background="#DFE4DD"
+        android:text="test"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="32dp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.471" />
+
+    <TextView
         android:id="@+id/d"
         android:layout_width="410dp"
         android:layout_height="257dp"
         android:layout_marginBottom="72dp"
+        android:background="#DFE4DD"
+        android:padding="30dp"
         android:text="@string/bold"
         android:textSize="22dp"
-        android:padding="30dp"
+        android:scrollbars = "vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.736" />
+        app:layout_constraintVertical_bias="0.888" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

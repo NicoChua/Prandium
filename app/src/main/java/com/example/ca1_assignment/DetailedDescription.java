@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +26,6 @@ public class DetailedDescription extends AppCompatActivity {
         new ImageLoadTask(image, img).execute();
         TextView desc = (TextView) findViewById(R.id.d);
         desc.append("\n" + description);
-
+        desc.setMovementMethod(new ScrollingMovementMethod());
     }
 }
