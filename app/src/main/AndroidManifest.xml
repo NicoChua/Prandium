@@ -20,14 +20,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <!-- <activity -->
-        <!-- android:name=".favourites" -->
-        <!-- android:exported="false"> -->
-        <!-- <meta-data -->
-        <!-- android:name="android.app.lib_name" -->
-        <!-- android:value="" /> -->
-        <!-- </activity> -->
-        <activity android:name=".ViewAllUsers" />
         <activity
             android:name=".Home"
             android:exported="true">
@@ -37,9 +29,6 @@
         </activity>
         <activity
             android:name=".Register"
-            android:exported="true" />
-        <activity
-            android:name=".Login"
             android:exported="true" />
         <activity
             android:name=".splashscreen"
@@ -53,9 +42,6 @@
         <activity android:name=".MainActivity" />
         <activity
             android:name=".Profile"
-            android:exported="true" />
-        <activity
-            android:name=".favourites"
             android:exported="true" />
         <activity android:name=".ImagesActivity"></activity>
         <activity

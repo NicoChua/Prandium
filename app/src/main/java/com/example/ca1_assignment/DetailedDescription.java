@@ -25,9 +25,7 @@ public class DetailedDescription extends AppCompatActivity implements View.OnCli
         getSupportActionBar().hide();
         Intent intent = getIntent();
         String name = intent.getStringExtra("locationName");
-        Log.d("intent","Intent1: " + name);
         String image = intent.getStringExtra("locationImage");
-        Log.d("intent","Intent2: " + image);
         String description = intent.getStringExtra("locationDesc");
         String link = intent.getStringExtra("locationLink");
         TextView name2 = (TextView) findViewById(R.id.name2);
